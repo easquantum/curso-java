@@ -1,7 +1,7 @@
 package poo;
 
 //import javax.swing.*;
-
+// Version desde eeepc 27-10-2016
 public class UsoVehiculo {
 
 	public static void main(String[] args) {
