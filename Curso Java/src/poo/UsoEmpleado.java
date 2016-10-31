@@ -18,6 +18,10 @@ public class UsoEmpleado {
 		misEmpleados[3]=new Empleado("Antonio"); // segundo constructor
 		misEmpleados[4]=jefeRRHH; // Poliformismo en acción. Principio de sustitución
 		misEmpleados[5]=new Jefatura("Maria",9500,1999,5,26);
+		
+		Jefatura jefa=(Jefatura) misEmpleados[5]; // Casting
+		
+		jefa.estableceIncentivo(550); // Ahora si tiene el metodo estableceIncentivo
 
 		for(Empleado e: misEmpleados){
 			e.subeSueldo(5);
@@ -77,7 +81,7 @@ class Empleado{
 	}
 	
 	// getter
-	public double dameId(){
+	public int dameId(){
 		return Id;
 	}
 	
@@ -91,7 +95,8 @@ class Empleado{
 
 // Herencia
 
-class Jefatura extends Empleado{
+// final class Jefatura extends Empleado{ // Uso de final
+	class Jefatura extends Empleado{
 	
 	public Jefatura(String nom, double sue, int ano, int mes, int dia){
 		
@@ -119,6 +124,14 @@ class Jefatura extends Empleado{
 	 
 }
 
-
-
+/*// No puede heredar de una clase final
+class Director extends Jefatura {
+	
+	public Director (String nom, double sue, int ano, int mes, int dia){
+		
+		super(nom,sue,ano,mes,dia);
+		
+	}
+}
+*/
 
