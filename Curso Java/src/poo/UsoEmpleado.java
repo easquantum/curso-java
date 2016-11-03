@@ -23,10 +23,30 @@ public class UsoEmpleado {
 		
 		jefa.estableceIncentivo(550); // Ahora si tiene el metodo estableceIncentivo
 
+		System.out.println(jefa.tomarDecisiones("Dar dos dias mas de vacaciones a los empleados"));
+		
+		System.out.println("El jefe "+jefa.dameNombre()+" tiene un bonus de: "+jefa.estableceBonus(500));
+		
+		System.out.println("El empleado "+misEmpleados[3].dameNombre()+" tiene un bonus de: "+misEmpleados[3].estableceBonus(20));
+		
 		for(Empleado e: misEmpleados){
 			e.subeSueldo(5);
 
 		}
+		
+		Empleado directorComercial=new Jefatura("Sandra",8500,2012,05,05);
+		
+		Comparable ejemplo=new Empleado("Elisabeth",9500,2011,06,07);
+		
+		if (directorComercial instanceof Empleado){
+			System.out.println("Es de tipo Jefatura");
+		}
+		
+		if (ejemplo instanceof Comparable){
+			System.out.println("Es de tipo Comparable");
+		}
+		
+		Arrays.sort(misEmpleados);
 		
 		for(Empleado e: misEmpleados){
 			System.out.println("Nombre : "+e.dameNombre()+
@@ -38,7 +58,7 @@ public class UsoEmpleado {
 
 }
 
-class Empleado{
+class Empleado implements Comparable, Trabajadores { // Uso de interface Comparable
 	
 	public Empleado(String nom,double sue, int ano, int mes, int dia){
 		
@@ -46,11 +66,15 @@ class Empleado{
 		sueldo=sue;		
 		GregorianCalendar calendario=new GregorianCalendar(ano, mes-1, dia);
 		altaContrato=calendario.getTime();
-		Id=IdSiguiente;
-		IdSiguiente++;
+		id=idSiguiente;
+		idSiguiente++;
 
 	}
 	
+	public double estableceBonus(double gratificacion){
+		
+		return Trabajadores.bonusBase+gratificacion;
+	}
 	
 	public Empleado(String nom){
 		
@@ -82,26 +106,52 @@ class Empleado{
 	
 	// getter
 	public int dameId(){
-		return Id;
+		return id;
+	}
+	
+	
+	// Sobre escribir método de la interface Comparable
+	
+	public int compareTo(Object miObjeto){
+		
+		Empleado otroEmpleado=(Empleado) miObjeto;
+		if (this.id<otroEmpleado.id){
+			return -1;
+		}
+		if (this.id>otroEmpleado.id){
+			return 1;
+		}
+		return 0 ;
 	}
 	
 	private String nombre;
 	private double sueldo;
 	private Date altaContrato;
-	private static int IdSiguiente=1;
-	private int Id;
+	private static int idSiguiente=1;
+	private int id;
 	
 }
 
 // Herencia
 
 // final class Jefatura extends Empleado{ // Uso de final
-	class Jefatura extends Empleado{
+	class Jefatura extends Empleado implements Jefes {
 	
 	public Jefatura(String nom, double sue, int ano, int mes, int dia){
 		
 		super(nom,sue,ano,mes,dia);
 		
+	}
+	
+	public String tomarDecisiones(String decision){
+		
+		return("Un miembro de Jefatura a tomado la decisión "+decision);
+	}
+	
+	public double estableceBonus(double gratificacion){
+		
+		double prima=200;
+		return Trabajadores.bonusBase+gratificacion+prima;
 	}
 	
 	public void estableceIncentivo(double b){
